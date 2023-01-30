@@ -53,17 +53,9 @@ public class UploadService {
                 .map(String::valueOf)
                 .collect(Collectors.toList());
 
-        //List<String> stringList = new ArrayList<String>();
-
-
-//        if(headerRow == Cell.CELL_TYPE_NUMERIC)
-//            //your code
-//        else if(MytempCell.getCellType() == Cell.CELL_TYPE_STRING)
-//            your code
 
         int colCount = headerCells.size();
 
-        //System.out.println("headerCells -> "+ headerCells);
 
 
 
@@ -75,11 +67,6 @@ public class UploadService {
                             //.map(Cell::getStringCellValue)
                             .map(String::valueOf)
                             .collect(Collectors.toList());
-
-//                    for (String val: cellList){
-//                        val = val.toString();
-//                        stringList.add(val);
-//                    }
 
                     return uploadUtil.cellIteratorSupplier(colCount-2)
                             .get()

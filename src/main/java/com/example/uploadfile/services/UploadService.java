@@ -44,12 +44,17 @@ public class UploadService {
 
         Supplier<Stream<Row>> rowStreamSupplier = uploadUtil.getRowStreamSupplier(sheet);
 
+
+
         Row headerRow = rowStreamSupplier.get().findFirst().get();
 
         List<String> headerCells = uploadUtil.getStream(headerRow)
-                .map(Cell::getNumericCellValue)
+                //.map(Cell::getNumericCellValue)
                 .map(String::valueOf)
                 .collect(Collectors.toList());
+
+        //List<String> stringList = new ArrayList<String>();
+
 
 //        if(headerRow == Cell.CELL_TYPE_NUMERIC)
 //            //your code
@@ -60,24 +65,25 @@ public class UploadService {
 
         //System.out.println("headerCells -> "+ headerCells);
 
-        List<String> stringList = new ArrayList<>();
+
 
         return rowStreamSupplier.get()
                 .skip(1)
                 .map(row -> {
 
                     List<String> cellList = uploadUtil.getStream(row)
-                            .map(Cell::getStringCellValue)
+                            //.map(Cell::getStringCellValue)
+                            .map(String::valueOf)
                             .collect(Collectors.toList());
 
-                    for (String val: cellList){
-                        val = val.toString();
-                        stringList.add(val);
-                    }
+//                    for (String val: cellList){
+//                        val = val.toString();
+//                        stringList.add(val);
+//                    }
 
-                    return uploadUtil.cellIteratorSupplier(colCount)
+                    return uploadUtil.cellIteratorSupplier(colCount-2)
                             .get()
-                            .collect(toMap(headerCells::get, stringList::get));
+                            .collect(toMap(headerCells::get, cellList::get));
                 })
                 .collect(Collectors.toList());
     }
